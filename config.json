@@ -1,0 +1,13 @@
+{
+    "OldExportDir": "./icstool/oldicstool9153116a2/",
+    "NewExportDir": "./icstool/newicstool3271091e59/",
+    "vsbDir":       "./vsbs",
+    "exportDir":    "./db_mdf",
+    "reportDir":    "./reports",
+    "comparison": {
+        "timeAbsoluteTolerance": 0.0,
+        "timeRelativeTolerance": 0.0,
+        "valueAbsoluteTolerance": 0.0,
+        "valueRelativeTolerance": 0.0
+    }
+}
