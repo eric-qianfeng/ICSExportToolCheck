@@ -1,4 +1,6 @@
-# DB Export Check Tool
+# DB/MDF Export Check Tool
+
+Project version: `1.0.0` (tracked in `VERSION`; check with `python .\main.py --version`).
 
 Stage 1 converts the same VSB recordings with the old and new Windows export
 tools. Stage 2 compares old/new DB and MDF files independently and generates
@@ -16,6 +18,36 @@ offline HTML reports with a run summary and channel indexes.
   directory containing VSBs are an error. Input files are not modified.
 - If no eligible directory is found, the workflow stops rather than comparing
   potentially stale outputs. Directory symlinks are not followed.
+
+## Export Tools
+
+Each version's tool directory, configured by `OldExportDir` or `NewExportDir`,
+must contain both executables:
+
+- `vsbExport-bin.exe` reads a `.vsdb` database definition and one or more
+  directories containing `.vsb` recordings. It creates the SQLite `.db` signal
+  database and can also export CSV and other message formats.
+- `dbExport-bin.exe` reads the generated DB files and exports channel data to
+  formats such as MDF. This project uses MDF 4.1 (`.mf4`).
+
+The commands used by this project are:
+
+```powershell
+vsbExport-bin.exe --csv -p -o <output_dir> -d <vsdb_path> -b <vsb_dir>[,<vsb_dir>...]
+dbExport-bin.exe -ap <directory_containing_db_files> 256
+```
+
+For `vsbExport-bin.exe`, `--csv` also creates CSV output, `-p` displays
+progress, `-o` selects the output directory, `-d` selects the VSDB file, and
+`-b` selects the VSB directory or comma-separated VSB directories. The exporter
+also creates the DB needed by the next step. Avoid `-m` for this workflow:
+that option exports messages only and does not create a DB.
+
+For `dbExport-bin.exe`, `-a` selects all channels and `-p` displays progress;
+`-ap` combines these options. Format `256` means MDF 4.1 (`.mf4`). Other format
+codes include CSV `1`, MDF `.dat` `2`, MATLAB `.mat` `4`, and all formats `263`.
+The executables are launched from their own installation directories, once for
+the old tools and once for the new tools for every eligible input directory.
 
 ## Run
 

@@ -5,9 +5,12 @@ from pathlib import Path
 from compare_files import compare_all
 from export_files import export_all
 
+PROJECT_VERSION = Path(__file__).with_name("VERSION").read_text(encoding="ascii").strip()
+
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description="Export old/new recordings, compare outputs and generate HTML reports.")
+    parser.add_argument("--version", action="version", version=f"%(prog)s {PROJECT_VERSION}")
     parser.add_argument(
         "--config", type=Path, default=Path(__file__).with_name("config.json"),
         help="Configuration file (default: config.json next to this script).",
