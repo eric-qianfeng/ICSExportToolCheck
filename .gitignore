@@ -5,4 +5,7 @@ __pycache__/
 db_mdf/
 vsbs/
 reports/
+icstool/
+ChannelVspyDBFile.h
+ChannelVspyDBFile.cpp
 
